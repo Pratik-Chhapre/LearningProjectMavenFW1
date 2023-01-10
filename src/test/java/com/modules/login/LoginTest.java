@@ -12,7 +12,6 @@ public class LoginTest extends BaseTest {
     @Test(priority = 1)
     public void testLogin() throws IOException {
         logger = extent.startTest("Test Login");
-        //infoPrint( res.getTestClass().getName() + " is Passed ",1);
         infoPrint("Launching the Browser worked fine",1);
         LoginPage loginPage1 = new LoginPage(driver);
         infoPrint("-------------------------------",1);
