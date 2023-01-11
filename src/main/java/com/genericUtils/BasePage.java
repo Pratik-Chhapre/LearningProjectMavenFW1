@@ -124,4 +124,95 @@ public class BasePage extends BaseTest {
         }
         System.out.println(logTime()+" : "+temp);
     }
+    public static void implicitWait(int i){
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(i));
+
+    }
+    /**
+     * pageRefresh() refresh the page
+     */
+    public static void pageRefresh() {
+        try {
+            driver.navigate().refresh();
+            waitForPageLoad();
+        }
+        catch (Exception exception){}
+    }
+    /**
+     * navigateToBackPage() navigate to  the back page
+     */
+    public static void navigateToBackPage() {
+        driver.navigate().back();
+        waitForPageLoad();
+    }
+    public static void waitForPageLoad() {
+//        ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
+//            public Boolean apply(WebDriver driver) {
+//                return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+//            }
+//        };
+//        try {
+//            WebDriverWait wait = new WebDriverWait(driver, EXPLICIT_WAIT);
+//            wait.until(expectation);
+//        } catch (Throwable error) {
+//            error.printStackTrace();
+//        }
+        wait = new WebDriverWait(driver, EXPLICIT_WAIT);
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver wdriver) {
+                return js.executeScript("return document.readyState").equals("complete");
+            }
+        });
+        new Actions(driver).pause(delay).build().perform();
+    }
+    public static void zoomInPageAndTakeScreenShort(WebElement element) throws IOException {
+        takeScreenShortAndPrintInfo(element);
+    }
+    public static void elementClick(WebElement element) throws IOException {
+        if(getElement(element)){
+            scrollTillElement(element);
+            builder.moveToElement(element).click(element).build().perform();
+        }
+        else {
+            zoomInPageAndTakeScreenShort(element);
+        }
+        waitForPageLoad();
+    }
+    public static boolean  getElement(WebElement element){
+        boolean result;
+        try {
+            scrollTillElement(element);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            result = true;
+        } catch (Exception exception) {
+            informationPrint(String.valueOf(exception));
+            result = false;
+        }
+        return result;
+    }
+    /**
+     * scrollTillElement() receives
+     * @param element and value, The element is WebElement type and value is String type.
+     *This will check the element is available in the UI or not, If present scroll till the Element and then enter the value into text area
+     */
+    public static void scrollTillElement(WebElement element){
+        waitForPageLoad();
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+    /**
+     * givenList_shouldReturnARandomElement() receives
+     * @param nameEndsWith  is String type and  it returns random new Name .
+     *This  will receive name which needs to be enter the UI and concat with some random number and returns
+     */
+    public static String randomName(String nameEndsWith){
+        Random rand = new Random();
+        return nameEndsWith.concat(String.valueOf(rand.nextInt(1000)));
+    }
+    /**
+     * randomAccountNumberGeneration() returns random new 10 digit account number .
+     */
+    public static String randomAccountNumberGeneration(){
+        Random random = new Random();
+        return String.format("%011d", random.nextInt(1000000000));
+    }
 }

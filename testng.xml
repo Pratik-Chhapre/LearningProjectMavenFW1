@@ -4,6 +4,8 @@
     <test name="ATLC">
         <classes>
             <class name="com.modules.login.LoginTest"/>
+            <class name="com.modules.login.orderSelectionTest"/>
+
 
         </classes>
     </test>

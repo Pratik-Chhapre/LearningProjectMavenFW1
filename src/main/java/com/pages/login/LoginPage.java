@@ -12,15 +12,26 @@ import java.io.IOException;
 import static com.genericUtils.BasePage.*;
 import static com.genericUtils.BaseTest.builder;
 import static com.genericUtils.BaseTest.js;
-/**
- * The LoginPage has LoginPage  webelement's ,methode to perform the actions, methode to collect the  results and methode to Verify the results
- * @author Nandini
- */
+
 public class LoginPage {
 
+    @FindBy(xpath = "//input[@id='user-name']")
+    private WebElement username;
+    @FindBy(xpath = "//input[@id='password']")
+    private WebElement password;
+    @FindBy(xpath = "//input[@id='login-button']")
+    private WebElement loginButton;
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-
     }
 
+    public void enterUsername(){
+        username.sendKeys(prop.getProperty("urnm"));
+    }
+    public void enterPassword(){
+        password.sendKeys(prop.getProperty("pass"));
+    }
+    public void clickLoginButton(){
+        loginButton.click();
+    }
 }

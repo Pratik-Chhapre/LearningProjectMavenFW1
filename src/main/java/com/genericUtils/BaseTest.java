@@ -56,7 +56,7 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void verifyAppStatus(){
         try {
-            if(driver.getCurrentUrl().equalsIgnoreCase("https://www.flipkart.com/")){
+            if(driver.getCurrentUrl().equalsIgnoreCase("https://www.saucedemo.com/")){
 
             }
         } catch (Exception e){
